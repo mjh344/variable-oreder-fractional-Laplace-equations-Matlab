@@ -1,7 +1,7 @@
 clear;
 clc;
 
-% 设置VPA有效数字位数
+
 digits(80);
 
 N_values = [32,64,128,256,512];
