@@ -13,7 +13,6 @@ function [max_error, convergence_rate] = ...
 
         alp = vpa(alp_values(alp_idx));
 
-        % 精确解前面的常数，使用VPA计算
         exact_constant = sqrt(sym(pi)) ...
             /(vpa(2)^alp ...
             *gamma(1+alp/2) ...
@@ -26,17 +25,15 @@ function [max_error, convergence_rate] = ...
             fprintf('正在计算：alp = %.2f, N = %d\n', ...
                 double(alp), N);
 
-            % A的系数由VPA计算，最后返回double矩阵
+            
             A = coef_matrix(N, alp);
 
             % 右端项
             f = zeros(N+1,1);
             f(2:N) = 1;
 
-            % 双精度求解线性系统
             u = A\f;
 
-            % 使用VPA网格计算精确解
             x_vpa = graded_mesh(a, b, N, alp);
 
             one_minus_x2 = 1-x_vpa.^2;
@@ -44,15 +41,12 @@ function [max_error, convergence_rate] = ...
             u_exact_vpa = exact_constant ...
                 .*one_minus_x2.^(alp/2);
 
-            % 完成精确解计算后才转成double
             u_exact = double(vpa(u_exact_vpa(:)));
 
-            % 最大误差
             error_value = max(abs(u-u_exact));
 
             max_error(alp_idx,N_idx) = error_value;
 
-            % 收敛阶
             if N_idx > 1
                 convergence_rate(alp_idx,N_idx-1) = ...
                     log(max_error(alp_idx,N_idx-1) ...
