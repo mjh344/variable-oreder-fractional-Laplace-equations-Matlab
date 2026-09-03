@@ -1,11 +1,5 @@
 function x = graded_mesh(a, b, N, alp)
-% 使用VPA生成强分级网格
 
-    if mod(N, 2) ~= 0
-        error('N必须是偶数。');
-    end
-
-    % 所有参与网格计算的数据先转成VPA
     a   = vpa(a);
     b   = vpa(b);
     alp = vpa(alp);
