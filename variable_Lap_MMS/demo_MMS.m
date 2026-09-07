@@ -5,6 +5,6 @@ alpha_funs = {
 
 N_values = [16, 32, 64, 128, 256, 512];
 
-[error_max, convergence] = error_analysis_MMS(N_values,alpha_fun{1});
+[error_max, convergence] = error_analysis_MMS(N_values,alpha_funs{1});
 
 
